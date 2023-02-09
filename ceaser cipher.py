@@ -29,6 +29,6 @@ def decrypt(string, shift):
 
 PT= input("Enter the string :")
 Key=int(input("Enter the shift or key"))
-print("Text",PT)
+print("Vansh",PT)
 print("Encrypted text",encrypt(PT, Key))
 print ("Decrypted Text",decrypt(PT,Key))
