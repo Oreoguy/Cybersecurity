@@ -1,57 +1,68 @@
-def rail_fence_encrypt(plain_text, num_rails):
-    fence = [[] for _ in range(num_rails)]
-    rail = 0
-    direction = 1
+import argparse
 
-    # Build the fence by iterating through the plaintext
-    for char in plain_text:
-        fence[rail].append(char)
-        rail += direction
+def railfence_encrypt(word, n):
+    if n <= 1:
+        return word
 
-        # Change direction if we reach the top or bottom rail
-        if rail == num_rails - 1 or rail == 0:
-            direction = -direction
+    ascending = False
+    encrypted = n * ['']
+    counter = 0
 
-    # Flatten the fence into a single list to get the ciphertext
-    cipher_text = []
-    for rail in fence:
-        cipher_text.extend(rail)
+    for letter in word:
+        encrypted[counter] += letter
+        if ascending:
+            counter -= 1
+            if counter == 0:
+                ascending = False
+        else:
+            counter += 1
+            if counter == n-1:
+                ascending = True
+    
+    return ''.join(encrypted)
 
-    return ''.join(cipher_text)
 
+def railfence_decrypt(word, n):
+    length = len(word)
+    counter = 0
+    offset = 0
+    ascending = False
+    decrypted = ''
+    matrix = [['']*length for i in range(n)]
 
-def rail_fence_decrypt(cipher_text, num_rails):
-    fence = [[] for _ in range(num_rails)]
-    rail = 0
-    direction = 1
+    while(offset != length):
+        matrix[counter][offset] = '*'
+        offset += 1
+        if ascending:
+            counter -= 1
+            if counter == 0:
+                ascending = False
+        else:
+            counter += 1
+            if counter == n-1:
+                ascending = True
 
-    # Build the fence by iterating through the ciphertext
-    for char in cipher_text:
-        fence[rail].append(None)
-        rail += direction
+    offset = 0
+    #uzupelnianie schodkow
+    for i in range(n):
+        for j in range(length):
+            if matrix[i][j] == '*':
+                matrix[i][j] = word[offset]
+                offset += 1
+    #odczyt kolumnami
+    for i in range(length):
+        for j in range(n):
+            if matrix[j][i] != '':
+                decrypted += matrix[j][i]
+    
+    return decrypted
 
-        # Change direction if we reach the top or bottom rail
-        if rail == num_rails - 1 or rail == 0:
-            direction = -direction
-
-    # Fill the fence with the ciphertext characters
-    index = 0
-    for rail in fence:
-        for i in range(len(rail)):
-            rail[i] = cipher_text[index]
-            index += 1
-
-    # Read off the plaintext from the fence
-    plain_text = []
-    rail = 0
-    direction = 1
-    for _ in range(len(cipher_text)):
-        plain_text.append(fence[rail][0])
-        fence[rail] = fence[rail][1:]
-        rail += direction
-
-        # Change direction if we reach the top or bottom rail
-        if rail == num_rails - 1 or rail == 0:
-            direction = -direction
-
-    return ''.join(plain_text)
+parser = argparse.ArgumentParser(description='Railfence cipher program')
+parser.add_argument('string', help='string to process, between \'\' for multiple words')
+parser.add_argument('-d', '--decrypt', action='store_true', help='sets decryption flag to true')
+parser.add_argument('key', type=int, help='number of rails')
+args = parser.parse_args()
+if args.decrypt:
+    print(railfence_decrypt(args.string, args.key))
+else:
+    print(railfence_encrypt(args.string, args.key))
