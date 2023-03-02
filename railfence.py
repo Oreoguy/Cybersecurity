@@ -43,13 +43,13 @@ def railfence_decrypt(word, n):
                 ascending = True
 
     offset = 0
-    #uzupelnianie schodkow
+
     for i in range(n):
         for j in range(length):
             if matrix[i][j] == '*':
                 matrix[i][j] = word[offset]
                 offset += 1
-    #odczyt kolumnami
+                
     for i in range(length):
         for j in range(n):
             if matrix[j][i] != '':
@@ -59,7 +59,7 @@ def railfence_decrypt(word, n):
 
 parser = argparse.ArgumentParser(description='Railfence cipher program')
 parser.add_argument('string', help='string to process, between \'\' for multiple words')
-parser.add_argument('-d', '--decrypt', action='store_true', help='sets decryption flag to true')
+parser.add_argument('-d', '--decrypt', action='storetrue', help='sets decryption flag to true')
 parser.add_argument('key', type=int, help='number of rails')
 args = parser.parse_args()
 if args.decrypt:
