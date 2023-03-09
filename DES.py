@@ -1,16 +1,3 @@
-
-def bintotext ():
-
-
-
-
-#def tostr():
-	
-
-
-
-
-
 def des(inputText, key, decrypt=False):
 	plain = toStr([binary(ord(letter)) for letter in list(inputText)])
 	output = ""
