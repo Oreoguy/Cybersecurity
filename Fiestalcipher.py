@@ -10,7 +10,7 @@ logger = logging.getLogger()
 def byte_xor(ba1: List, ba2: List) -> List:
     return [a ^ b for a, b in zip(ba1, ba2)]
 
-# Define a function to pretty-print arrays
+# Define a function to print arrays
 def pp(arr) -> str:
     if type(arr) is int:
         return str(arr)
