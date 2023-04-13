@@ -1,7 +1,7 @@
 import math
 import random
 import sys
-
+from math import sqrt
 primebits = 64
 bitsize = 128
 def generate_keypair(p, q,f,n):
@@ -18,19 +18,30 @@ def generate_keypair(p, q,f,n):
     return ((e, n), (d, n))
 
 #to calculate whether its prime or not
-def prime_number(i):
+"""def isprime(i):
     if i>1 :
-        for j in range (2,int(i/2)+1):
+        for j in range (2,int(math.sqrt(i))):
             if(i % j) == 0:
                 return False
         return True
+"""
+def isprime(n):
+    if n >= 3 :
+        return n>1
+    if n% 2 == 0 or n%3==0:
+        return False
+    limit = sqrt(n)
+    for i in range (5,limit+1,6):
+        if n%i == 0 or n%(i+2)==0:
+            return False
+    return True
 
 def gcd(a,b):
     for i in range(1,min(a,b)+1):
         if ((a % i == 0)and (b % i == 0)):
             gcd = i
     return gcd
-
+"""
 def inverse(a, m) : 
     m0 = m 
     y = 0
@@ -52,7 +63,7 @@ def inverse(a, m) :
         x = x + m0 
   
     return x 
-
+"""
 ''' Function : Encryption & Decryption 
 	Cipher text c = m^e mod n 
 	Plain text d= c^d mod n
@@ -79,7 +90,7 @@ while True:
 	except ValueError:
 		print("InValid Input")
 		continue
-	if not prime_number(p):
+	if not isprime(p):
 		print("Enter a prime number")
 		continue
 	else:
@@ -90,7 +101,7 @@ while True:
 	except ValueError:
 		print("InValid Input")
 		continue
-	if not prime_number(q):
+	if not isprime(q):
 		print("Enter a prime number")
 		continue
 	else:
