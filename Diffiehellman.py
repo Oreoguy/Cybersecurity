@@ -1,3 +1,4 @@
+
 print("Single prime number for both party")
 q= int(input("Enter a prime number:"))
 
