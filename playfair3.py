@@ -83,13 +83,11 @@ def encryption(plain_text):
         else:
             plain_text_pairs.append(a+'x')
             # else dont leave the next letter and put x
-            # in place of repeated letter and conitnue with the next letter
+            # in place of repeated letter and continue with the next letter
             # which is repeated (according to algo)
             i+=1
             
     print("plain text pairs: ",plain_text_pairs)
-
-
     for pair in plain_text_pairs:
         flag=False
         for row in key_matrix:
@@ -141,13 +139,8 @@ def encryption(plain_text):
     print("cipher text pairs: ",cipher_text_pairs)
     print('plain text: ',plain_text)
     print('cipher text: ',"".join(cipher_text_pairs))
-
-
-
-    
-    
+ 
 key=input("Enter the key: ")
-
 key_matrix=key_generation(key)
 print("Key Matrix for encryption:")
 print(key_matrix)
